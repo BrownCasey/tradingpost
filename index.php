@@ -16,16 +16,35 @@
 	
 	if(isset($_GET["searchbox"])){
 	$itemQuery = $_GET["searchbox"];
-	$sql = "SELECT items.id, items.name, time, buy, sell 
+// Slow. Times out.
+/*	$sql = "SELECT items.id, items.name, time, buy, sell 
 		FROM items 
 		LEFT JOIN prices 
 		ON items.id = prices.id 
+		WHERE items.name LIKE '%$itemQuery%'"; */
+// Still slow. Times out.
+/*	$sql = "SELECT id, name 
+		FROM items 
+		WHERE name LIKE '%$itemQuery%' 
+		GROUP BY id"; */
+// Still slow.
+/*	$sql = "SELECT id, name 
+		FROM items 
+		WHERE id = '68' OR id = '69' OR id = '132'"; */
+	$sql = "SELECT items.id, items.name, time, buy, sell
+		FROM items 
+		LEFT JOIN prices 
+		ON items.id = prices.id
 		WHERE items.name LIKE '%$itemQuery%'";
 	$result = mysql_query($sql);
-		while($result){
-			$row = mysql_fetch_array($result);
+		while($row = mysql_fetch_array($result)){
 			print_r($row);
 		}
+// Slow caused by infinite loop? Methinks yes . . .
+//		while($result){
+//			$row = mysql_fetch_array($result);
+//			print_r($row);
+//		}
 	}
 	else {
 		$sql = "SELECT * FROM items";
