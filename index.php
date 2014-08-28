@@ -4,12 +4,37 @@
     <meta charset="utf-8">
 	<title>The Bazaar</title>
     </meta>
+    <script src="https://www.google.com/jsapi"></script>
+    <script>
+	// come back and investigate google.visualization.arrayToDataTable()
+	google.load("visualization", "1", {packages:["table"]});
+	google.setOnLoadCallback(drawTable);
+
+	function drawTable() {
+	    var data = new google.visualization.DataTable();
+	    data.addColumn('string', 'Item');
+	    data.addColumn('number', 'Buy');
+	    data.addColumn('number', 'Sell');
+	    data.addColumn('number', 'Timestamp');
+	    data.addRows([
+		['Iron', 10, 15, 2014082500],
+		['Iron', 11, 16, 2014082506],
+		['Wood', 5, 8, 2014082500],
+		['Wood', 5, 7, 2014082506]
+	    ]);
+
+	    var table = new google.visualization.Table(document.getElementById('table_div'));
+
+	    table.draw(data, {showRowNumber: true});
+	}
+    </script>
 </head>
 <body>
 	<form action="index.php" method="get">
 	<input type="text" name="searchbox" value="Search items by name">
 	<input type="submit" value="submit"/>
 	</form>
+	<div id="table_div"></div>
 	<pre>
 	<?php
 	require_once("includes/common.php");
@@ -38,6 +63,7 @@
 		WHERE items.name LIKE '%$itemQuery%'";
 	$result = mysql_query($sql);
 		while($row = mysql_fetch_array($result)){
+			echo json_encode($row);
 			print_r($row);
 		}
 // Slow caused by infinite loop? Methinks yes . . .
