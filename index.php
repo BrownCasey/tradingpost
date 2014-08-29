@@ -31,7 +31,7 @@
 </head>
 <body>
 	<form action="index.php" method="get">
-	<input type="text" name="searchbox" value="Search items by name">
+	<input type="text" name="searchbox" placeholder="Search items by name">
 	<input type="submit" value="submit"/>
 	</form>
 	<div id="table_div"></div>
@@ -63,7 +63,13 @@
 		WHERE items.name LIKE '%$itemQuery%'";
 	$result = mysql_query($sql);
 		while($row = mysql_fetch_array($result)){
-			echo json_encode($row);
+			$array = array(
+			$row[1],
+			$row[3],
+			$row[4],
+			$row[2],
+			);
+			echo json_encode($array);
 			print_r($row);
 		}
 // Slow caused by infinite loop? Methinks yes . . .
