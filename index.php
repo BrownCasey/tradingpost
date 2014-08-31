@@ -10,30 +10,13 @@
 	<form action="index.php" method="get">
 	<input type="text" name="searchbox" placeholder="Search items by name">
 	<input type="submit" value="submit"/>
-	<button onClick="showData()">Click Me</button>
 	</form>
 	<div id="table_div"></div>
 	<pre id="main">
 	<?php
 	require_once("includes/common.php");
-	$myRow = "hello";
 	if(isset($_GET["searchbox"])){
 	$itemQuery = $_GET["searchbox"];
-// Slow. Times out.
-/*	$sql = "SELECT items.id, items.name, time, buy, sell 
-		FROM items 
-		LEFT JOIN prices 
-		ON items.id = prices.id 
-		WHERE items.name LIKE '%$itemQuery%'"; */
-// Still slow. Times out.
-/*	$sql = "SELECT id, name 
-		FROM items 
-		WHERE name LIKE '%$itemQuery%' 
-		GROUP BY id"; */
-// Still slow.
-/*	$sql = "SELECT id, name 
-		FROM items 
-		WHERE id = '68' OR id = '69' OR id = '132'"; */
 	$sql = "SELECT items.id, items.name, time, buy, sell
 		FROM items 
 		LEFT JOIN prices 
@@ -55,7 +38,8 @@
 	echo "<div id='chartData' style='display: none;'>";
 	echo $stack;
 	echo "</div>";
-// Slow caused by infinite loop? Methinks yes . . .
+// For learning purposes:
+// Slow query caused by infinite loop? Methinks yes . . .
 //		while($result){
 //			$row = mysql_fetch_array($result);
 //			print_r($row);
@@ -71,6 +55,6 @@
 	}
 	?>
 	</pre>
-<script src="script.js"></script>
+<?php include 'script.php';?>
 </body>
 </html>
