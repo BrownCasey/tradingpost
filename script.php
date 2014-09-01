@@ -6,9 +6,6 @@
 	function drawTable() {
 	    var data = new google.visualization.DataTable();
 	    data.addColumn('string', 'Item');
-	    data.addColumn('string', 'Buy');
-	    data.addColumn('string', 'Sell');
-	    data.addColumn('string', 'Timestamp');
 	    data.addRows(<?php echo $stack ?>);
 	    data.setColumnProperty(0, {allowHtml: true});
 

@@ -45,20 +45,14 @@
 	}
 	elseif(isset($_GET["searchbox"])){
 		$itemQuery = $_GET["searchbox"];
-		$sql = "SELECT items.id, items.name, time, buy, sell
+		$sql = "SELECT id, name
 			FROM items 
-			LEFT JOIN prices 
-			ON items.id = prices.id
-			WHERE items.name LIKE '%$itemQuery%'
-			GROUP BY items.id";
+			WHERE items.name LIKE '%$itemQuery%'";
 		$result = mysql_query($sql);
 		$stack = array();
 		while($row = mysql_fetch_array($result)){
 			$array = array(
-			"<a href='index.php?id=" . $row[0] . "'>" . $row[1] . "</a>",
-			$row[3],
-			$row[4],
-			$row[2],
+			"<a href='index.php?id=" . $row[0] . "'>" . $row[1] . "</a>"
 			);
 			array_push($stack, $array);
 		}
