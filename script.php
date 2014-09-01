@@ -10,9 +10,10 @@
 	    data.addColumn('string', 'Sell');
 	    data.addColumn('string', 'Timestamp');
 	    data.addRows(<?php echo $stack ?>);
+	    data.setColumnProperty(0, {allowHtml: true});
 
 	    var table = new google.visualization.Table(document.getElementById('table_div'));
 
-	    table.draw(data, {showRowNumber: true});
+	    table.draw(data, {allowHtml: true});
 	}
 </script>
