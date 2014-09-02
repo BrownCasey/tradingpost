@@ -18,21 +18,17 @@
 	if(isset($_GET["id"])){
 		$itemId = $_GET["id"];
 		$sql = "SELECT items.id, items.name, time, buy, sell
-			FROM items 
-			LEFT JOIN prices 
+			FROM items
+			LEFT JOIN prices
 			ON items.id = prices.id
-			WHERE items.id = '$itemId'
+			WHERE prices.id = '$itemId'
 			ORDER BY time";
-		$result = mysql_query($sql);
+		print_r($result = mysql_query($sql));
 		$stack = array(['Time', 'Buy Price', 'Sell Price']);
-		$row = mysql_fetch_array($result);
+		print_r($row = mysql_fetch_array($result));
 		while($row = mysql_fetch_array($result)){
 			$itemName = $row[1];
-			$array = array(
-				$row[2],
-				$row[3],
-				$row[4]
-			);
+			$array = array($row[2], $row[3], $row[4]);
 			array_push($stack, $array);
 		}
 		$stack = json_encode($stack);
