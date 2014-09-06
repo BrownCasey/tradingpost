@@ -24,18 +24,18 @@
 			WHERE prices.id = '$itemId'
 			ORDER BY time";
 		print_r($result = mysql_query($sql));
-		$stack = array(['Time', 'Buy Price', 'Sell Price']);
+		$stack = array();
 		print_r($row = mysql_fetch_array($result));
 		while($row = mysql_fetch_array($result)){
 			$itemName = $row[1];
-			$array = array($row[2], $row[3], $row[4]);
+			$array = array("new Date(" . $row[2] . " * 1000)", $row[3], $row[4]);
 			array_push($stack, $array);
 		}
 		$stack = json_encode($stack);
 		$stack = str_replace('"', '', $stack);
-		$stack = str_replace('Time', '"Time"', $stack);
-		$stack = str_replace('Buy Price', '"Buy Price"', $stack);
-		$stack = str_replace('Sell Price', '"Sell Price"', $stack);
+//		$stack = str_replace('Time', '"Time"', $stack);
+//		$stack = str_replace('Buy Price', '"Buy Price"', $stack);
+//		$stack = str_replace('Sell Price', '"Sell Price"', $stack);
 		print_r($stack);
 		include "chart.php";
 	}
