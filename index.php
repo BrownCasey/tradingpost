@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
 	<title>The Bazaar</title>
-    </meta>
-    <script src="https://www.google.com/jsapi"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<link href="style.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script src="script.js"></script>
 </head>
 <body>
-	<form action="index.php" method="get">
-	<input type="text" name="searchbox" placeholder="Search items by name">
-	<input type="submit" value="submit"/>
-	</form>
-	<div id="table_div" style="width: 900px; max-height: 500px"></div>
-	<pre id="main">
+	<header>
+		<div id="title">The Bazaar: Past Prices from the Trading Post
+		</div>
+		<div id="search">
+			<form action="index.php" method="get">
+			<div class="widget">
+				<input type="text" id="searchbox" name="searchbox" placeholder="Search items e.g. Country Coat"/>
+				<input type="submit" value="submit"/>
+			</div>
+			</form>
+		</div>
+	</header>
+	<div id="results">
+		<div id="table_div">
+		</div>
 	<?php
 	require_once("includes/common.php");
 	if(isset($_GET["id"])){
@@ -23,9 +37,9 @@
 			ON items.id = prices.id
 			WHERE prices.id = '$itemId'
 			ORDER BY time";
-		print_r($result = mysql_query($sql));
+		$result = mysql_query($sql);
 		$stack = array();
-		print_r($row = mysql_fetch_array($result));
+		$row = mysql_fetch_array($result);
 		while($row = mysql_fetch_array($result)){
 			$itemName = $row[1];
 			$array = array("new Date(" . $row[2] . " * 1000)", $row[3], $row[4]);
@@ -36,7 +50,7 @@
 //		$stack = str_replace('Time', '"Time"', $stack);
 //		$stack = str_replace('Buy Price', '"Buy Price"', $stack);
 //		$stack = str_replace('Sell Price', '"Sell Price"', $stack);
-		print_r($stack);
+//		print_r($stack);
 		include "chart.php";
 	}
 	elseif(isset($_GET["searchbox"])){
@@ -63,15 +77,18 @@
 //			print_r($row);
 //		}
 	else {
-		$sql = "SELECT * FROM items";
-		$result = mysql_query($sql);
-		while($row = mysql_fetch_array($result)){
-			print $row['id'] . "\t";
-			print $row['name'] . "\n";
-		}
-	}
+		include "menu.php";
+//		$sql = "SELECT * FROM items";
+//		$result = mysql_query($sql);
+//		while($row = mysql_fetch_array($result)){
+//			print $row['id'] . "\t";
+//			print $row['name'] . "\n";
+//		}
+	     }
 	?>
-	</pre>
+	</div>
+	<footer><small><span style="float: left;">Website by <a href="https://twitter.com/Casey_C_Brown">Casey Brown</a></span><span style="float: right;">Guild Wars content is <a href="https://www.guildwars2.com/en/legal/guild-wars-2-content-terms-of-use/">&copy; ArenaNet, LLC.</a> All rights reserved.</span></small>
+	</footer>
 <?php // include 'script.php';
 ?>
 </body>
