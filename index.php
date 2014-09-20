@@ -78,12 +78,15 @@
 //		}
 	else {
 		include "menu.php";
-//		$sql = "SELECT * FROM items";
+//	prints array of all items in the DB
+//		$sql = "SELECT * FROM items GROUP BY name";
 //		$result = mysql_query($sql);
+//		print "[";
 //		while($row = mysql_fetch_array($result)){
-//			print $row['id'] . "\t";
-//			print $row['name'] . "\n";
+//			print "\"" . $row['name'] . "\"";
+//			print ", ";
 //		}
+//		print "]";
 	     }
 	?>
 	</div>
