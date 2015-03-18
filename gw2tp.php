@@ -16,6 +16,9 @@ require_once("includes/common.php");
 //			$count++;
 //		}
 	}
+	$week_ago = $time - 60 *60 * 24 * 7;
+	$sql = "DELETE FROM prices WHERE time < $week_ago";
+	$result = mysql_query($sql);
 //	print "$count items added to database\n $sql";
 //	print "</pre>";
 // fclose
